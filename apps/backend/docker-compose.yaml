@@ -1,0 +1,14 @@
+services:
+  postgres:
+    imagem: postgres:lastest
+    container_name: backend
+    ports:
+      - 5440:5432
+    environment:
+      - POSTGRES_USER: user
+      - POSTGRES_PASSWORD: password
+      - POSTGRES_DB: backend
+    volumes:
+      - postegres_data:/var/lib/postgresql/data
+
+volumes: postgres_data
