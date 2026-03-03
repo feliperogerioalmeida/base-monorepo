@@ -45,9 +45,9 @@ export default [
   js.configs.recommended,
   ...tseslint.configs.recommended,
 
-  // React/Next.js specific configuration for admin app
+  // React/Next.js specific configuration for frontend app
   {
-    files: ["apps/admin/**/*.{js,mjs,cjs,ts,tsx}"],
+    files: ["apps/frontend/**/*.{js,mjs,cjs,ts,tsx}"],
     languageOptions: {
       parserOptions: {
         ecmaFeatures: {
@@ -66,9 +66,9 @@ export default [
     },
   },
 
-  // Node.js specific configuration for API
+  // Node.js specific configuration for backend
   {
-    files: ["apps/api/**/*.{js,mjs,cjs,ts}"],
+    files: ["apps/backend/**/*.{js,mjs,cjs,ts}"],
     languageOptions: {
       globals: {
         ...globals.node,
