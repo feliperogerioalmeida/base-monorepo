@@ -4,7 +4,7 @@ export default {
     "scope-enum": [
       2,
       "always",
-      ["backend", "frontend", "types", "ui", "utils", "repo"],
+      ["auth", "backend", "frontend", "types", "ui", "utils", "repo"],
     ],
     "scope-empty": [2, "never"],
     "body-max-line-length": [0, "always"],

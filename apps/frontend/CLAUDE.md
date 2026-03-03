@@ -2,7 +2,8 @@
 
 ## Stack
 
-- Next.js App Router, React 19
+- Next.js 16 App Router, React 19
+- Middleware file is `proxy.ts` (NOT `middleware.ts`) — this is the correct name in Next.js 16
 
 ## File Organization
 
