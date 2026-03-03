@@ -1,10 +1,5 @@
-import { defaultLocale, type Locale, locales } from "@/lib/i18n.config";
-
-import { getNamespace } from "./dictionaries";
-
-const getValidLocale = (lang: string): Locale => {
-  return locales.includes(lang as Locale) ? (lang as Locale) : defaultLocale;
-};
+import { getNamespace } from "@/app/[lang]/dictionaries";
+import { getValidLocale } from "@/app/[lang]/layout";
 
 interface PageProps {
   params: Promise<{ lang: string }>;

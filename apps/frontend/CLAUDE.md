@@ -7,7 +7,7 @@
 ## File Organization
 
 - ALWAYS componentize — break pages into small, focused components for readability
-- Each page route MAY have a `_components/` folder for components exclusive to that page
+- Each page route MAY have a `_components/` folder for components exclusive to that page — but ONLY when `page.tsx` would become too large or complex without it. If the page is simple (e.g., just renders a single shared component with props), keep everything in `page.tsx` directly
 - `_components/` contains block/section components that compose the `page.tsx`
 - Shared components used across multiple pages go in the top-level `components/` folder
 - Keep `page.tsx` clean — it should mostly compose components, not contain logic or markup
@@ -17,6 +17,7 @@
 - Prefer Server Components — use `'use client'` only when strictly necessary (event handlers, browser APIs, hooks, client libs)
 - Functional components only
 - **ALWAYS** use shadcn/ui from `@workspace/ui` — NEVER create custom HTML elements when shadcn provides a component
+- For advanced form components (autocomplete, tags input, etc.) use [shadcn-form](https://www.shadcn-form.com) — check there before building custom form inputs
 - Add shadcn components: `cd packages/ui && pnpm dlx shadcn@latest add [component]`, then move and fix imports
 
 ## Data Fetching
@@ -39,7 +40,9 @@
 
 ## Styling
 
-- Tailwind CSS variables only — never hardcode colors
+- NEVER hardcode colors (e.g., `bg-[#0D1B2A]`, `text-white`) — ALWAYS use CSS variable classes (`bg-primary`, `text-card-foreground`)
+- If a color does not exist in the theme, add it as a CSS variable in `packages/ui/src/styles/globals.css` (both `:root` and `.dark`) and map it in `@theme inline`
+- Gradients MUST be defined as reusable classes in `globals.css` (e.g., `.gradient-primary`) — NEVER write inline `bg-gradient-to-*` with hardcoded color stops in components
 - `cn()` for conditional classes
 - Mobile-first responsive design
 

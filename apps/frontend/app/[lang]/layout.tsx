@@ -4,10 +4,9 @@ import type { Metadata } from "next";
 import { Toaster } from "sonner";
 
 import { Providers } from "@/components/providers";
-import { ThemeSwitcher } from "@/components/theme-switcher";
 import { defaultLocale, type Locale, locales } from "@/lib/i18n.config";
 
-const getValidLocale = (lang: string): Locale => {
+export const getValidLocale = (lang: string): Locale => {
   return locales.includes(lang as Locale) ? (lang as Locale) : defaultLocale;
 };
 
@@ -50,10 +49,7 @@ interface RootLayoutProps {
   params: Promise<{ lang: string }>;
 }
 
-export default async function RootLayout({
-  children,
-  params,
-}: RootLayoutProps) {
+const RootLayout = async ({ children, params }: RootLayoutProps) => {
   const { lang: langParam } = await params;
   const lang = getValidLocale(langParam);
 
@@ -61,13 +57,12 @@ export default async function RootLayout({
     <html lang={lang} suppressHydrationWarning>
       <body className="antialiased">
         <Providers>
-          <header className="fixed top-0 right-0 z-50 p-4">
-            <ThemeSwitcher />
-          </header>
-          <main className="pt-16 md:pt-20 lg:pt-24">{children}</main>
+          {children}
           <Toaster richColors />
         </Providers>
       </body>
     </html>
   );
-}
+};
+
+export default RootLayout;

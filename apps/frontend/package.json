@@ -10,8 +10,10 @@
     "lint": "eslint"
   },
   "dependencies": {
-    "@workspace/utils": "workspace:*",
+    "@workspace/auth": "workspace:*",
     "@workspace/ui": "workspace:*",
+    "@workspace/utils": "workspace:*",
+    "better-auth": "^1.4.19",
     "lucide-react": "^0.553.0",
     "motion": "^12.23.24",
     "next": "16.1.1",

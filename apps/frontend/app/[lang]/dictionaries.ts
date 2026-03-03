@@ -8,6 +8,7 @@ const loaders = {
     common: () =>
       import("./dictionaries/pt-BR/common.json").then((m) => m.default),
     home: () => import("./dictionaries/pt-BR/home.json").then((m) => m.default),
+    auth: () => import("./dictionaries/pt-BR/auth.json").then((m) => m.default),
   },
 } satisfies Record<Locale, Record<string, () => Promise<unknown>>>;
 

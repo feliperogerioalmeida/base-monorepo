@@ -20,7 +20,7 @@ export default function proxy(request: NextRequest) {
 export const config = {
   matcher: [
     // Skip all internal paths (_next)
-    "/((?!_next).*)",
+    "/((?!_next|api).*)",
     // Optional: only run on root (/) URL
     // '/'
   ],
