@@ -25,7 +25,7 @@
 
 ## Code Patterns
 
-- NEVER repeat code — extract to functions, hooks, or shared packages
+- DRY (Don't Repeat Yourself) — NEVER repeat code, extract to functions, hooks, or shared packages
 - NEVER nest if/else — prefer early returns
 - NEVER use comments — code must be self-explanatory (only when extremely necessary)
 - ALWAYS move magic numbers to named constants
