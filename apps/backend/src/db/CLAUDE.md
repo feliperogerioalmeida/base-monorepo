@@ -5,4 +5,6 @@
 - Cross-file relations: import the table from the file where it was defined
 - Pattern: `pgTable()` with indexes in 3rd argument, `relations()` defined after tables
 - Foreign keys: `.references(() => table.id, { onDelete: "cascade" })`
-- Column types: `text` for PKs, `timestamp` for dates, `boolean` for flags
+- Column types: `text` for PKs, `timestamp('...', { withTimezone: true })` (`timestamptz`) for dates, `boolean` for flags
+- ALL dates MUST be stored in UTC — NEVER store local time
+- NEVER use `pgEnum` — use `text` with Zod validation instead

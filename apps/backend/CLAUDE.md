@@ -16,6 +16,12 @@
 - **DTOs** — interfaces for inputs and outputs of services/repositories, defined in `src/domain/`
 - **Errors** — ALL custom errors MUST extend `AppError`, NEVER throw raw `Error`
 
+## Dates
+
+- ALL dates MUST be stored in UTC in the database
+- Use `timestamptz` (`timestamp with time zone`) for all date columns — NEVER use plain `timestamp`
+- Use dayjs with UTC plugin for date manipulation on the backend
+
 ## Patterns
 
 - Env vars centralized in `src/config/env.ts` — never use `process.env` directly
