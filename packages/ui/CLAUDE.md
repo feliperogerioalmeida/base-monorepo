@@ -60,10 +60,11 @@ This package contains shared UI components based on shadcn/ui, used across all f
 
 ## Styling Standards
 
-- **NEVER** hardcode colors - use CSS variables
+- **NEVER** hardcode colors — use CSS variables from `globals.css`
 - All colors must use the theme system (`--primary`, `--background`, etc.)
 - Support both light and dark modes
 - Use semantic color names (`destructive`, `muted`, `accent`)
+- If a new color is needed, add it as a CSS variable in `src/styles/globals.css` (both `:root` and `.dark`), map it in `@theme inline`, then use it via Tailwind
 
 ### Color Token Usage
 
@@ -73,6 +74,29 @@ className="bg-[#0D1B2A] text-white"
 
 // GOOD
 className="bg-card text-card-foreground"
+```
+
+### Gradients
+
+- Gradients MUST be defined as reusable classes in `src/styles/globals.css` — NEVER inline gradient definitions in components
+- Define in `@layer base` or `@layer utilities` so they are available everywhere
+- Use CSS variables for gradient color stops to support dark mode
+
+```css
+/* globals.css — GOOD */
+@layer utilities {
+  .gradient-primary {
+    background: linear-gradient(to right, var(--primary), var(--accent));
+  }
+}
+```
+
+```typescript
+// Component — GOOD
+className="gradient-primary"
+
+// Component — BAD
+className="bg-gradient-to-r from-[#6366f1] to-[#818cf8]"
 ```
 
 ---
