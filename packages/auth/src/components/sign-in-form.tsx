@@ -49,22 +49,24 @@ export const SignInForm = ({
   });
 
   const handleSubmit = async (values: SignInSchema) => {
-    const { error } = await authClient.signIn.email({
+    const { data, error } = await authClient.signIn.email({
       email: values.email,
       password: values.password,
     });
 
     if (error) {
-      if (error.status === 403 && twoFactorRedirect) {
-        router.push(twoFactorRedirect);
-        return;
-      }
       const message = error.message ?? error.statusText;
       if (onError) {
         onError(message);
       } else {
         toast.error(message);
       }
+      return;
+    }
+
+    const hasTwoFactor = data && "twoFactorRedirect" in data;
+    if (hasTwoFactor && twoFactorRedirect) {
+      router.push(twoFactorRedirect);
       return;
     }
 
