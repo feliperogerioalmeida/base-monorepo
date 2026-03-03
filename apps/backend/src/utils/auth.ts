@@ -44,7 +44,7 @@ export const auth = betterAuth({
     window: 10,
     max: 100,
   },
-  trustedOrigins: [CORS_ORIGIN],
+  trustedOrigins: CORS_ORIGIN.split(","),
   appName: APP_NAME,
   plugins: [
     openAPI(),
