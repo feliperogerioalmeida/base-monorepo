@@ -50,6 +50,13 @@
 - NEVER use `any`, `var`, or `enum`
 - Zod for runtime validation
 
+## Styling
+
+- NEVER hardcode colors — ALWAYS use CSS variables from `globals.css` (e.g., `bg-primary`, `text-muted-foreground`)
+- If a new color is needed, add it as a CSS variable in `packages/ui/src/styles/globals.css` (both light and dark themes), then reference it via Tailwind
+- Gradients MUST be defined as reusable classes in `globals.css` — NEVER inline gradient definitions in components
+- This ensures consistency, dark mode support, and easy theme changes across the entire monorepo
+
 ## Validation
 
 - ALL validations MUST happen on the backend

@@ -18,6 +18,12 @@
   "author": "Felipe Rogerio",
   "license": "ISC",
   "packageManager": "pnpm@10.20.0",
+  "pnpm": {
+    "overrides": {
+      "react": "19.2.0",
+      "react-dom": "19.2.0"
+    }
+  },
   "devDependencies": {
     "@commitlint/cli": "^20.4.2",
     "@commitlint/config-conventional": "^20.4.2",
