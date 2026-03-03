@@ -15,7 +15,7 @@ const Page = async ({ params }: PageProps) => {
     <SignUpForm
       labels={dict.signUp}
       signInHref="/sign-in"
-      successRedirect="/sign-in"
+      successRedirect="/dashboard"
     />
   );
 };

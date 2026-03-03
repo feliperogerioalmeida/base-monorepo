@@ -16,7 +16,7 @@ const Page = async ({ params }: PageProps) => {
       labels={dict.signIn}
       forgotPasswordHref="/forgot-password"
       signUpHref="/sign-up"
-      successRedirect="/"
+      successRedirect="/dashboard"
       twoFactorRedirect="/two-factor"
     />
   );

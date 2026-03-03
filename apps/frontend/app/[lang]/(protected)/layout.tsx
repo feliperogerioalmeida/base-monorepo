@@ -6,11 +6,11 @@ import { useRouter } from "next/navigation";
 
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
-interface AuthLayoutProps {
+interface ProtectedLayoutProps {
   children: React.ReactNode;
 }
 
-const AuthLayout = ({ children }: AuthLayoutProps) => {
+const ProtectedLayout = ({ children }: ProtectedLayoutProps) => {
   const { data: session, isPending } = authClient.useSession();
   const router = useRouter();
 
@@ -22,21 +22,19 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
     );
   }
 
-  if (session) {
-    router.replace("/dashboard");
+  if (!session) {
+    router.replace("/sign-in");
     return null;
   }
 
   return (
     <>
-      <div className="fixed top-0 right-0 z-50 p-4">
+      <header className="fixed top-0 right-0 z-50 p-4">
         <ThemeSwitcher />
-      </div>
-      <main className="flex min-h-svh items-center justify-center p-4">
-        {children}
-      </main>
+      </header>
+      <main className="pt-16 md:pt-20 lg:pt-24">{children}</main>
     </>
   );
 };
 
-export default AuthLayout;
+export default ProtectedLayout;

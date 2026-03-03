@@ -24,7 +24,10 @@
 
 - React Query (TanStack Query) in Client Components
 - Native `fetch` in Server Components
-- NEVER use `useEffect` unless strictly necessary — ALWAYS prefer React Query, event handlers, or Server Components
+- NEVER use `useEffect` — ALWAYS prefer React Query, event handlers, Server Components, or render-time logic
+- Redirects based on state (e.g., session check) go directly in the render body — NEVER wrap `router.replace()` in `useEffect`
+- `console.error` / `console.log` go directly in the render body — NEVER wrap logging in `useEffect`
+- The ONLY accepted uses of `useEffect`: hydration guards (e.g., `next-themes` mounted pattern) and fire-on-mount side effects with no user interaction trigger (e.g., auto-verify token on page load)
 - Prefer `setQueryData` over `invalidateQueries` for optimistic updates
 - Mutations: `useMutation` from React Query
 
@@ -61,14 +64,25 @@
 
 ## i18n / Dictionaries
 
+- **NEVER hardcode user-facing strings** — ALL visible text (labels, messages, buttons, errors, page titles) MUST come from dictionaries
+- The ONLY exception is `global-error.tsx`, which replaces the entire HTML and has no access to providers or CSS
 - Dictionaries live in `app/[lang]/dictionaries/<locale>/` — one folder per locale (e.g., `pt-BR/`, `en-US/`)
 - Each namespace is a separate `.json` file (e.g., `home.json`, `common.json`)
-- `common.json` holds shared strings (navbar, footer, generic buttons)
+- `common.json` holds shared strings (navbar, footer, generic buttons, error/not-found pages)
 - One `.json` file per page/feature — filename matches the namespace
 - Use `getNamespace("home", locale)` in pages — loads only the needed namespace
 - Use `getDictionary(locale)` only when ALL namespaces are needed
 - When creating a new page, add its `.json` in every locale folder and update `dictionary.types.ts` + `dictionaries.ts` loaders
 - Types are defined in `lib/dictionary.types.ts` — each namespace has its own interface
+- Client Components that cannot use `server-only` loaders MAY import the JSON directly as a static import
+
+## Authentication
+
+- ALWAYS use `authClient.useSession()` from `@workspace/auth/client` to check session state — NEVER roll custom session checks
+- Route group `(auth)` — public pages (sign-in, sign-up, etc.). Layout MUST redirect to `/dashboard` if session exists
+- Route group `(protected)` — authenticated pages. Layout MUST redirect to `/sign-in` if no session
+- Pages that require a token via searchParams (reset-password, verify-email) MUST `redirect("/sign-in")` if token is missing
+- Session check pattern in layouts: `isPending` → show spinner, `session` resolved → render or redirect
 
 ## Security
 
