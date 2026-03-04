@@ -8,7 +8,7 @@
     "build": "tsc && tsc-alias && copyfiles -u 1 src/**/*.ejs dist",
     "start": "node dist/app.js",
     "test": "vitest",
-    "coverage": "vitest run --coverage"
+    "test:coverage": "vitest run --coverage"
   },
   "keywords": [],
   "type": "module",
