@@ -12,6 +12,7 @@
     "format:check": "prettier --check .",
     "type-check": "turbo run type-check",
     "test": "turbo run test",
+    "test:coverage": "turbo run test:coverage",
     "prepare": "husky"
   },
   "keywords": [],
