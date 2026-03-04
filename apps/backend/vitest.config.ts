@@ -12,6 +12,7 @@ export default defineConfig({
   },
   test: {
     globals: true,
+    passWithNoTests: true,
     environment: "node",
     coverage: {
       provider: "v8",
