@@ -13,6 +13,12 @@
     "type-check": "turbo run type-check",
     "test": "turbo run test",
     "test:coverage": "turbo run test:coverage",
+    "linear:check": "bash scripts/linear/check-access.sh",
+    "linear:issue": "bash scripts/linear/fetch-issue.sh",
+    "linear:create-issue": "bash scripts/linear/create-issue.sh",
+    "linear:create-branch": "bash scripts/linear/create-branch.sh",
+    "linear:set-status": "bash scripts/linear/set-status.sh",
+    "linear:relations": "bash scripts/linear/get-relations.sh",
     "prepare": "husky"
   },
   "keywords": [],

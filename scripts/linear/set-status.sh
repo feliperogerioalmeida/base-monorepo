@@ -15,7 +15,7 @@ if [ -z "$ISSUE_ID" ] || [ -z "$STATUS" ]; then
     exit 1
 fi
 
-RESULT=$(linear issue update "$ISSUE_ID" --status "$STATUS" 2>&1)
+RESULT=$(linear issue update "$ISSUE_ID" --state "$STATUS" 2>&1)
 
 if [ $? -ne 0 ]; then
     echo -e "${RED}Error: Failed to update issue $ISSUE_ID to '$STATUS'${NC}"
