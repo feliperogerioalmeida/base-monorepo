@@ -89,6 +89,9 @@ await app.register(fastifyApiReference, {
   routePrefix: "/docs",
   configuration: {
     theme: "kepler",
+    authentication: {
+      preferredSecurityScheme: "bearerAuth",
+    },
     sources: [
       {
         title: `${APP_NAME} API`,
