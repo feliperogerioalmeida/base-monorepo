@@ -61,3 +61,22 @@
 
 - ALL validations MUST happen on the backend
 - Frontend is for presentation only — NEVER rely on frontend for security
+
+## URL State (nuqs)
+
+- ALWAYS use nuqs for any URL-driven state (filters, pagination, sorting, tabs)
+- NEVER use `useSearchParams()` manually — nuqs handles URL state
+- Define typed parsers in `search-params.ts` per feature/route
+- Use `createSearchParamsCache` in Server Components to read search params
+- Use `useQueryStates` in Client Components to read/write search params
+- `NuqsAdapter` MUST be placed in the root layout
+
+## API Client Generation (Orval)
+
+- ALWAYS use Orval to generate API clients from the OpenAPI spec
+- Config: React Query + fetch + tags-split
+- Generated output goes to `src/api/endpoints/` and `src/api/model/`
+- Use a custom mutator for auth headers
+- NEVER edit generated files — they are overwritten on regeneration
+- NEVER create manual query keys or fetch hooks when Orval already generates them for the endpoint
+- Endpoints not covered by the OpenAPI spec follow the existing manual pattern
