@@ -21,13 +21,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
           node-version: "20"
           cache: "pnpm"
@@ -44,7 +44,7 @@ jobs:
       - name: Run tests with coverage
         run: pnpm test:coverage
 
-      - name: Comment coverage on PR (API)
+      - name: Comment coverage on PR
         if: github.event_name == 'pull_request'
         continue-on-error: true
         uses: romeovs/lcov-reporter-action@v0.3.1
@@ -58,20 +58,18 @@ jobs:
         run: |
           echo "## Test Coverage Summary" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-
-          for app in api CopaCSP; do
-            if [ -f "apps/$app/coverage/coverage-summary.json" ]; then
-              echo "### $app" >> $GITHUB_STEP_SUMMARY
-              node -e "
-                const summary = require('./apps/$app/coverage/coverage-summary.json');
-                const total = summary.total;
-                console.log('| Metric | Coverage |');
-                console.log('|--------|----------|');
-                console.log('| Lines | ' + total.lines.pct + '% |');
-                console.log('| Statements | ' + total.statements.pct + '% |');
-                console.log('| Functions | ' + total.functions.pct + '% |');
-                console.log('| Branches | ' + total.branches.pct + '% |');
-              " >> $GITHUB_STEP_SUMMARY
-              echo "" >> $GITHUB_STEP_SUMMARY
-            fi
-          done
+          if [ -f "apps/api/coverage/coverage-summary.json" ]; then
+            echo "### API" >> $GITHUB_STEP_SUMMARY
+            node -e "
+              const summary = require('./apps/api/coverage/coverage-summary.json');
+              const total = summary.total;
+              console.log('| Metric | Coverage |');
+              console.log('|--------|----------|');
+              console.log('| Lines | ' + total.lines.pct + '% |');
+              console.log('| Statements | ' + total.statements.pct + '% |');
+              console.log('| Functions | ' + total.functions.pct + '% |');
+              console.log('| Branches | ' + total.branches.pct + '% |');
+            " >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Coverage report not found" >> $GITHUB_STEP_SUMMARY
+          fi
