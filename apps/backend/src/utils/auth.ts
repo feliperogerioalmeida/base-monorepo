@@ -7,7 +7,12 @@ import {
   twoFactor,
 } from "better-auth/plugins";
 
-import { APP_NAME, CORS_ORIGIN } from "@/config/env.js";
+import {
+  APP_NAME,
+  BASE_URL,
+  COOKIE_DOMAIN,
+  CORS_ORIGIN,
+} from "@/config/env.js";
 import { db } from "@/db/index.js";
 import { sendEmail } from "@/utils/send-email.js";
 
@@ -45,6 +50,15 @@ export const auth = betterAuth({
     max: 100,
   },
   trustedOrigins: CORS_ORIGIN.split(","),
+  advanced: {
+    ...(COOKIE_DOMAIN && {
+      crossSubDomainCookies: {
+        enabled: true,
+        domain: COOKIE_DOMAIN,
+      },
+    }),
+    useSecureCookies: BASE_URL.startsWith("https"),
+  },
   appName: APP_NAME,
   plugins: [
     openAPI(),

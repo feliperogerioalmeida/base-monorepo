@@ -26,3 +26,5 @@ export const BETTER_AUTH_SECRET = fetchEnv("BETTER_AUTH_SECRET");
 export const BETTER_AUTH_URL = fetchEnv("BETTER_AUTH_URL");
 
 export const APP_NAME = fetchEnv("APP_NAME");
+
+export const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN ?? "";

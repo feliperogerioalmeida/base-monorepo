@@ -148,8 +148,9 @@ app.listen({ port: PORT, host: HOST }, (err) => {
     app.log.error(err);
     process.exit(1);
   }
-  console.log(`🚀 ${APP_NAME} API is running on ${PORT}`);
+  const publicUrl = process.env.PORTLESS_URL ?? `http://localhost:${PORT}`;
+  console.log(`🚀 ${APP_NAME} API is running on port ${PORT}`);
   console.log(
-    `📚 ${APP_NAME} API Documentation available at http://localhost:${PORT}/docs`,
+    `📚 ${APP_NAME} API Documentation available at ${publicUrl}/docs`,
   );
 });
