@@ -2,7 +2,7 @@
 
 import { authClient } from "@workspace/auth/client";
 import { Loader2 } from "lucide-react";
-import { useRouter } from "next/navigation";
+import { redirect } from "next/navigation";
 
 import { ThemeSwitcher } from "@/components/theme-switcher";
 
@@ -12,7 +12,6 @@ interface AuthLayoutProps {
 
 const AuthLayout = ({ children }: AuthLayoutProps) => {
   const { data: session, isPending } = authClient.useSession();
-  const router = useRouter();
 
   if (isPending) {
     return (
@@ -23,8 +22,7 @@ const AuthLayout = ({ children }: AuthLayoutProps) => {
   }
 
   if (session) {
-    router.replace("/dashboard");
-    return null;
+    redirect("/dashboard");
   }
 
   return (
