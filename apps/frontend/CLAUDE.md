@@ -26,7 +26,8 @@
 - React Query (TanStack Query) in Client Components
 - Native `fetch` in Server Components
 - NEVER use `useEffect` — ALWAYS prefer React Query, event handlers, Server Components, or render-time logic
-- Redirects based on state (e.g., session check) go directly in the render body — NEVER wrap `router.replace()` in `useEffect`
+- Redirects MUST be handled in `proxy.ts` (middleware) — NEVER use `useEffect` or `router.replace/push` for redirects in Client Components. The middleware already fetches the profile and decides the correct route before the page renders. If a new protected route needs redirect logic, add it to `proxy.ts`
+- Redirects in Server Components: use `redirect()` from `next/navigation`
 - `console.error` / `console.log` go directly in the render body — NEVER wrap logging in `useEffect`
 - The ONLY accepted uses of `useEffect`: hydration guards (e.g., `next-themes` mounted pattern) and fire-on-mount side effects with no user interaction trigger (e.g., auto-verify token on page load)
 - Prefer `setQueryData` over `invalidateQueries` for optimistic updates
@@ -49,6 +50,34 @@
 - Gradients MUST be defined as reusable classes in `globals.css` (e.g., `.gradient-primary`) — NEVER write inline `bg-gradient-to-*` with hardcoded color stops in components
 - `cn()` for conditional classes
 - Mobile-first responsive design
+
+## URL State (nuqs)
+
+- ALWAYS use [nuqs](https://nuqs.dev/) for URL search params state — NEVER use raw `useSearchParams()` or manual URL manipulation
+- Use cases: filters, pagination, sorting, tabs, modals, any state that should be shareable via URL
+- `NuqsAdapter` from `nuqs/adapters/next/app` MUST wrap the app in the root layout (inside `<body>`)
+- Define parsers in a co-located `search-params.ts` file next to the page that uses them
+- Use `createSearchParamsCache` + parsers for Server Components — call `cache.parse(searchParams)` in `page.tsx`
+- Use `useQueryStates(parsers)` in Client Components — import the same parsers object for type-safety
+- ALWAYS use typed parsers (`parseAsString`, `parseAsInteger`, `parseAsBoolean`, `parseAsStringEnum`, etc.) — NEVER parse manually
+- Use `.withDefault()` to avoid `null` values when a sensible default exists
+- Group related params with `useQueryStates` — use `useQueryState` only for a single isolated param
+
+## API Client Generation (Orval)
+
+- ALWAYS use [Orval](https://orval.dev/) to generate API clients from the OpenAPI spec — NEVER write manual fetch functions for endpoints covered by the spec
+- Config lives in `orval.config.ts` at the app root
+- Output settings: `client: 'react-query'`, `httpClient: 'fetch'`, `mode: 'tags-split'`
+- Generated files go to `generated/endpoints/` (hooks) and `generated/model/` (types) — these are gitignored, regenerate with `pnpm orval`
+- Custom mutator lives at `generated/custom-fetch.ts` — handles auth headers (credentials: include) and error throwing
+- Run `pnpm orval` to regenerate after spec changes — NEVER manually edit generated files
+- Use the generated hooks directly in components (e.g., `useGetApiMatchesRecent()`, `useGetApiStandings()`)
+- Generated query keys are managed by Orval — NEVER create manual query keys for endpoints that have generated hooks
+- For endpoints NOT in the spec, follow the existing manual pattern (React Query + fetch)
+- Mock data (MSW): enabled via `mock: { type: 'msw' }` — generates `.msw.ts` files alongside hooks
+- Mock handlers are aggregated in `generated/mocks/handlers.ts` and started via `MSWProvider` (wraps app in development only)
+- To add mocks for new endpoints, import the generated `get<Tag>Mock()` function into `handlers.ts`
+- `swagger.json` is gitignored — fetch from running API server (`GET /swagger.json`) before regenerating
 
 ## State
 

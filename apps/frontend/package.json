@@ -4,10 +4,11 @@
   "type": "module",
   "private": true,
   "scripts": {
-    "dev": "portless myapp next dev",
+    "dev": "NODE_EXTRA_CA_CERTS=$HOME/.portless/ca.pem portless myapp next dev",
     "build": "next build",
-    "start": "next start --port 3001",
-    "lint": "eslint"
+    "start": " NODE_EXTRA_CA_CERTS=$HOME/.portless/ca.pem portless myapp next start ",
+    "lint": "eslint",
+    "orval": "NODE_EXTRA_CA_CERTS=$HOME/.portless/ca.pem orval"
   },
   "dependencies": {
     "@workspace/auth": "workspace:*",
