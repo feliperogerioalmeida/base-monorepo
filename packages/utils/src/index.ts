@@ -1,5 +1,9 @@
+export * from "./constants.js";
+
+const ISO_DATE_LENGTH = 10;
+
 export const formatDate = (date: Date): string => {
-  return date.toISOString().split("T")[0];
+  return date.toISOString().slice(0, ISO_DATE_LENGTH);
 };
 
 export const countDigits = (value: string): number =>
