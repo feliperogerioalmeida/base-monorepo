@@ -1,6 +1,7 @@
 import fastifyCors from "@fastify/cors";
 import fastifySwagger from "@fastify/swagger";
 import fastifyApiReference from "@scalar/fastify-api-reference";
+import { APP_NAME } from "@workspace/utils";
 import fastify from "fastify";
 import {
   jsonSchemaTransform,
@@ -12,14 +13,7 @@ import {
 } from "fastify-type-provider-zod";
 import z from "zod/v4";
 
-import {
-  APP_NAME,
-  BASE_URL,
-  CORS_ORIGIN,
-  HOST,
-  NODE_ENV,
-  PORT,
-} from "./config/env.js";
+import { BASE_URL, CORS_ORIGIN, HOST, NODE_ENV, PORT } from "./config/env.js";
 import { authRoutes } from "./controllers/auth.js";
 import { errorHandler } from "./errors/handler.js";
 

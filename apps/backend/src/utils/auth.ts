@@ -1,3 +1,4 @@
+import { APP_NAME } from "@workspace/utils";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
@@ -7,12 +8,7 @@ import {
   twoFactor,
 } from "better-auth/plugins";
 
-import {
-  APP_NAME,
-  BASE_URL,
-  COOKIE_DOMAIN,
-  CORS_ORIGIN,
-} from "@/config/env.js";
+import { BASE_URL, COOKIE_DOMAIN, CORS_ORIGIN } from "@/config/env.js";
 import { db } from "@/db/index.js";
 import { sendEmail } from "@/utils/send-email.js";
 
