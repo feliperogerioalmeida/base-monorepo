@@ -71,7 +71,7 @@ export const auth = betterAuth({
     }),
     haveIBeenPwned({
       customPasswordCompromisedMessage:
-        "Your password might been exposed, Please choose a more secure password.",
+        "Esta senha apareceu em vazamentos de dados conhecidos e não é mais segura. Escolha uma senha diferente que você não tenha usado em nenhum outro site.",
     }),
   ],
 });
