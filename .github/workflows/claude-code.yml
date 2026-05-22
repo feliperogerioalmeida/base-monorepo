@@ -36,7 +36,7 @@ jobs:
         with:
           export-env: true
         env:
-          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SA_TOKEN_FR_CLAUDE_BOT }}
           CLAUDE_APP_ID: op://FR Claude Bot/CLAUDE_APP_ID/password
           CLAUDE_APP_PRIVATE_KEY: op://FR Claude Bot/CLAUDE_APP_PRIVATE_KEY/notesPlain
 
