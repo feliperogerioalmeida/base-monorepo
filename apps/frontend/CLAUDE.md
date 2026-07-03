@@ -17,9 +17,45 @@
 
 - Prefer Server Components — use `'use client'` only when strictly necessary (event handlers, browser APIs, hooks, client libs)
 - Functional components only
-- **ALWAYS** use shadcn/ui from `@workspace/ui` — NEVER create custom HTML elements when shadcn provides a component
 - For advanced form components (autocomplete, tags input, etc.) use [shadcn-form](https://www.shadcn-form.com) — check there before building custom form inputs
 - Add shadcn components: `cd packages/ui && pnpm dlx shadcn@latest add [component]`, then move and fix imports
+
+### CRITICAL: Always use shadcn/ui primitives — never raw HTML
+
+This is a strict requirement. Before reaching for an HTML tag, check whether `@workspace/ui` already exports a shadcn component. The shadcn version handles a11y, focus, dark mode, and styling tokens consistently with the rest of the app — raw HTML does not.
+
+| Need | shadcn (use this) | raw HTML (avoid) |
+|------|-------------------|------------------|
+| Text input | `Input` | `<input>` |
+| Password input | `PasswordInput` | `<input type="password">` |
+| Number input | `Input` + react-number-format | `<input type="number">` |
+| Button | `Button` (with `variant` / `size`) | `<button>` |
+| Anchor / internal link | `Link` from `next/link` (optionally `<Button asChild>` wrapping `<Link>`) | `<a href>` |
+| Dropdown | `Select` | `<select>` |
+| Checkbox | `Checkbox` | `<input type="checkbox">` |
+| Radio | `RadioGroup` | `<input type="radio">` |
+| Textarea | `Textarea` | `<textarea>` |
+| Modal / dialog | `Dialog` | custom `<div role="dialog">` |
+| Toast | `Sonner` (`toast.*` from `sonner`) | custom popup |
+| Tabs | `Tabs` | `<div>`-based tab UI |
+| Card / panel | `Card` (+ `CardHeader`, `CardContent`) | bespoke `<div>` with shadow utilities |
+| Chart | shadcn chart components (Recharts-based) | direct Recharts / `<canvas>` |
+
+The **single exception** is `app/global-error.tsx`: it replaces the entire `<html>` document and runs without providers or CSS, so it must use raw HTML primitives. Every other file MUST use shadcn.
+
+When wiring a link inside a `Button`, use `asChild` so shadcn merges its styles into `next/link`:
+
+```tsx
+// GOOD
+<Button asChild>
+  <Link href="/dashboard">Voltar</Link>
+</Button>
+
+// BAD
+<a href="/dashboard" className="rounded-md bg-primary px-4 py-2">Voltar</a>
+```
+
+If shadcn does not have what you need, ask before building custom — most cases already exist on https://ui.shadcn.com/docs/components.
 
 ## Data Fetching
 
@@ -111,7 +147,8 @@
 - ALWAYS use `authClient.useSession()` from `@workspace/auth/client` to check session state — NEVER roll custom session checks
 - Route group `(auth)` — public pages (sign-in, sign-up, etc.). Layout MUST redirect to `/dashboard` if session exists
 - Route group `(protected)` — authenticated pages. Layout MUST redirect to `/sign-in` if no session
-- Pages that require a token via searchParams (reset-password, verify-email) MUST `redirect("/sign-in")` if token is missing
+- Pages that require a token via searchParams (`reset-password`) MUST `redirect("/sign-in")` if token is missing; `verify-email-otp` requires an `email` searchParam from the sign-up redirect and MUST `redirect("/sign-in")` when absent
+- Email verification uses **6-digit OTP** (not magic link) — sign-up redirects to `/verify-email-otp?email=...` and the user types the code; on success better-auth auto-creates the session via `emailVerification.autoSignInAfterVerification`
 - Session check pattern in layouts: `isPending` → show spinner, `session` resolved → render or redirect
 
 ## Security
