@@ -19,10 +19,12 @@
       "dependsOn": ["^type-check"]
     },
     "test": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
     },
     "test:coverage": {
-      "cache": false
+      "cache": false,
+      "dependsOn": ["^build"]
     },
     "db:studio": {
       "cache": false,
