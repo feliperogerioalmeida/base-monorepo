@@ -5,7 +5,7 @@ export {
   SignInForm,
   SignUpForm,
   TwoFactorForm,
-  VerifyEmailCard,
+  VerifyEmailOtpForm,
 } from "./components/index";
 export {
   createForgotPasswordSchema,
@@ -13,6 +13,7 @@ export {
   createSignInSchema,
   createSignUpSchema,
   createTwoFactorSchema,
+  createVerifyEmailOtpSchema,
 } from "./schemas/index";
 export type {
   AuthDictionary,
@@ -31,6 +32,7 @@ export type {
   TwoFactorFormLabels,
   TwoFactorFormProps,
   TwoFactorValidation,
-  VerifyEmailCardLabels,
-  VerifyEmailCardProps,
+  VerifyEmailOtpFormLabels,
+  VerifyEmailOtpFormProps,
+  VerifyEmailOtpValidation,
 } from "./types";

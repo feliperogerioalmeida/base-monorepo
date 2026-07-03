@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { authClient } from "../client";
-import { createSignUpSchema,type SignUpSchema } from "../schemas/sign-up";
+import { createSignUpSchema, type SignUpSchema } from "../schemas/sign-up";
 import type { SignUpFormProps } from "../types";
 
 export const SignUpForm = ({
@@ -66,9 +66,12 @@ export const SignUpForm = ({
     }
 
     if (onSuccess) {
-      onSuccess();
+      onSuccess(values.email);
     } else if (successRedirect) {
-      router.push(successRedirect);
+      const separator = successRedirect.includes("?") ? "&" : "?";
+      router.push(
+        `${successRedirect}${separator}email=${encodeURIComponent(values.email)}`,
+      );
     }
   };
 
@@ -90,6 +93,7 @@ export const SignUpForm = ({
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="grid gap-4"
+                noValidate
               >
                 <FormField
                   control={form.control}

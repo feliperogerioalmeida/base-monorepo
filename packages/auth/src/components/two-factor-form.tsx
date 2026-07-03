@@ -29,7 +29,10 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { authClient } from "../client";
-import { createTwoFactorSchema,type TwoFactorSchema } from "../schemas/two-factor";
+import {
+  createTwoFactorSchema,
+  type TwoFactorSchema,
+} from "../schemas/two-factor";
 import type { TwoFactorFormProps } from "../types";
 
 const TOTP_CODE_LENGTH = 6;
@@ -95,6 +98,7 @@ export const TwoFactorForm = ({
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="grid gap-6"
+                noValidate
               >
                 <FormField
                   control={form.control}

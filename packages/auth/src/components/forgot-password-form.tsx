@@ -114,6 +114,7 @@ export const ForgotPasswordForm = ({
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="grid gap-4"
+                noValidate
               >
                 <FormField
                   control={form.control}

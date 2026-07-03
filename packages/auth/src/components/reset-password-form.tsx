@@ -91,6 +91,7 @@ export const ResetPasswordForm = ({
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="grid gap-4"
+                noValidate
               >
                 <FormField
                   control={form.control}

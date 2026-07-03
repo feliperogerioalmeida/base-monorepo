@@ -27,6 +27,10 @@ export interface TwoFactorValidation {
   codeLength: string;
 }
 
+export interface VerifyEmailOtpValidation {
+  codeLength: string;
+}
+
 export interface SignInFormLabels {
   title: string;
   description: string;
@@ -86,14 +90,19 @@ export interface ResetPasswordFormLabels {
   validation: ResetPasswordValidation;
 }
 
-export interface VerifyEmailCardLabels {
-  verifyingTitle: string;
-  verifyingDescription: string;
+export interface VerifyEmailOtpFormLabels {
+  title: string;
+  description: string;
+  codeLabel: string;
+  submitButton: string;
+  submittingButton: string;
   successTitle: string;
   successDescription: string;
-  errorTitle: string;
-  errorDescription: string;
+  resendButton: string;
+  resendCooldown: string;
+  resentToast: string;
   backToSignInLink: string;
+  validation: VerifyEmailOtpValidation;
 }
 
 export interface TwoFactorFormLabels {
@@ -120,7 +129,7 @@ export interface SignUpFormProps {
   labels: SignUpFormLabels;
   signInHref: string;
   successRedirect?: string;
-  onSuccess?: () => void;
+  onSuccess?: (email: string) => void;
   onError?: (error: string) => void;
 }
 
@@ -140,10 +149,11 @@ export interface ResetPasswordFormProps {
   onError?: (error: string) => void;
 }
 
-export interface VerifyEmailCardProps {
-  labels: VerifyEmailCardLabels;
-  token: string;
+export interface VerifyEmailOtpFormProps {
+  labels: VerifyEmailOtpFormLabels;
+  email: string;
   signInHref: string;
+  successRedirect?: string;
   onSuccess?: () => void;
   onError?: (error: string) => void;
 }
@@ -161,6 +171,6 @@ export interface AuthDictionary {
   signUp: SignUpFormLabels;
   forgotPassword: ForgotPasswordFormLabels;
   resetPassword: ResetPasswordFormLabels;
-  verifyEmail: VerifyEmailCardLabels;
+  verifyEmailOtp: VerifyEmailOtpFormLabels;
   twoFactor: TwoFactorFormLabels;
 }

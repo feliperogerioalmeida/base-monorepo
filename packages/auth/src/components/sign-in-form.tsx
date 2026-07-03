@@ -26,7 +26,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 
 import { authClient } from "../client";
-import { createSignInSchema,type SignInSchema } from "../schemas/sign-in";
+import { createSignInSchema, type SignInSchema } from "../schemas/sign-in";
 import type { SignInFormProps } from "../types";
 
 export const SignInForm = ({
@@ -95,6 +95,7 @@ export const SignInForm = ({
               <form
                 onSubmit={form.handleSubmit(handleSubmit)}
                 className="grid gap-4"
+                noValidate
               >
                 <FormField
                   control={form.control}
