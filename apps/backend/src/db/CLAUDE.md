@@ -1,8 +1,8 @@
 # Database Conventions
 
-- One file per domain in `schemas/` (e.g., `auth.ts`)
-- Barrel export in `schemas/index.ts` — new schemas MUST be added here
-- Cross-file relations: import the table from the file where it was defined
+- All tables live in a single `schema.ts` (no `schemas/` folder)
+- `drizzle.config.ts` and `db/index.ts` point at `./src/db/schema.ts`
+- Group each domain's tables together within the file, `relations()` right after them
 - Pattern: `pgTable()` with indexes in 3rd argument, `relations()` defined after tables
 - Foreign keys: `.references(() => table.id, { onDelete: "cascade" })`
 - Column types: `text` for PKs, `timestamp('...', { withTimezone: true })` (`timestamptz`) for dates, `boolean` for flags
