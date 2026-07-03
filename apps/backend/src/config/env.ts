@@ -24,5 +24,9 @@ export const HOST = fetchEnv("HOST");
 
 export const BETTER_AUTH_SECRET = fetchEnv("BETTER_AUTH_SECRET");
 export const BETTER_AUTH_URL = fetchEnv("BETTER_AUTH_URL");
+export const AUTH_URL = fetchEnv("AUTH_URL");
+
+export const RESEND_API_KEY = fetchEnv("RESEND_API_KEY");
+export const EMAIL_FROM = fetchEnv("EMAIL_FROM");
 
 export const COOKIE_DOMAIN = process.env.COOKIE_DOMAIN ?? "";
