@@ -13,6 +13,10 @@
       "types": "./src/client.ts",
       "default": "./src/client.ts"
     },
+    "./schemas": {
+      "types": "./src/schemas/index.ts",
+      "default": "./src/schemas/index.ts"
+    },
     "./schemas/*": "./src/schemas/*.ts",
     "./components/*": "./src/components/*.tsx",
     "./types": {
