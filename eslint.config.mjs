@@ -14,6 +14,10 @@ export default [
       "**/build/**",
       "**/dist/**",
       "**/next-env.d.ts",
+      "**/.expo/**",
+      "**/expo-env.d.ts",
+      "apps/mobile/src/api/endpoints/**",
+      "apps/mobile/src/api/model/**",
     ],
   },
 
@@ -63,6 +67,36 @@ export default [
       react: {
         version: "detect",
       },
+    },
+  },
+
+  // React Native specific configuration for mobile app
+  {
+    files: ["apps/mobile/**/*.{js,mjs,cjs,ts,tsx}"],
+    languageOptions: {
+      parserOptions: {
+        ecmaFeatures: {
+          jsx: true,
+        },
+      },
+      globals: {
+        ...globals.browser,
+        ...globals.node,
+        React: "readonly",
+      },
+    },
+    settings: {
+      react: {
+        version: "detect",
+      },
+    },
+  },
+
+  // Expo config files are CommonJS by contract
+  {
+    files: ["apps/mobile/*.js"],
+    rules: {
+      "@typescript-eslint/no-require-imports": "off",
     },
   },
 
