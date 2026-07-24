@@ -1,4 +1,5 @@
-import { APP_NAME } from "@workspace/utils";
+import { expo } from "@better-auth/expo";
+import { APP_NAME, APP_SCHEME } from "@workspace/utils";
 import { betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import {
@@ -60,7 +61,7 @@ export const auth = betterAuth({
     window: 10,
     max: 100,
   },
-  trustedOrigins: CORS_ORIGIN.split(","),
+  trustedOrigins: [...CORS_ORIGIN.split(","), `${APP_SCHEME}://`],
   advanced: {
     ...(COOKIE_DOMAIN && {
       crossSubDomainCookies: {
@@ -74,6 +75,7 @@ export const auth = betterAuth({
   plugins: [
     openAPI(),
     bearer(),
+    expo(),
     twoFactor({
       issuer: APP_NAME,
       backupCodeOptions: {
@@ -88,7 +90,7 @@ export const auth = betterAuth({
       otpLength: VERIFY_EMAIL_OTP_LENGTH,
       expiresIn: VERIFY_EMAIL_OTP_EXPIRES_SECONDS,
       sendVerificationOnSignUp: true,
-      async sendVerificationOTP({ email, otp }) {
+      async sendVerificationOTP({ email, otp, type }) {
         const existingUser = await findUserByEmail(email);
         const html = await renderEmail("verify-email-otp", {
           appName: APP_NAME,
@@ -97,10 +99,14 @@ export const auth = betterAuth({
           expiresInMinutes: VERIFY_EMAIL_OTP_EXPIRES_MINUTES,
           year: new Date().getFullYear(),
         });
+        const subject =
+          type === "forget-password"
+            ? `Código para redefinir sua senha — ${APP_NAME}`
+            : `Seu código de verificação — ${APP_NAME}`;
         await sendEmail({
           to: email,
-          subject: `Seu código de verificação — ${APP_NAME}`,
-          text: `Seu código de verificação é ${otp}. Ele expira em ${VERIFY_EMAIL_OTP_EXPIRES_MINUTES} minutos.`,
+          subject,
+          text: `Seu código é ${otp}. Ele expira em ${VERIFY_EMAIL_OTP_EXPIRES_MINUTES} minutos.`,
           html,
         });
       },
